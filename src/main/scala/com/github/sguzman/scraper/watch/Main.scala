@@ -50,11 +50,22 @@ object Main {
 
     Init.removeHttp(pages.toList.map(_.link))
 
+    val ignore = Set(
+      "https://www.watchcartoononline.io/charadys-daily-joke-episode-7-english-subbed",
+      "https://www.watchcartoononline.io/asobi-ni-iku-yo-ova-english-subbed",
+      "https://www.watchcartoononline.io/black-jack-2004-episode-3-english-subbed"
+    )
+
     val iframe = episodes
       .flatMap(_.eps)
+      .filter(a => !ignore.contains(a))
       .map{a =>
       def proc(doc: Browser#DocumentType): String = {
-        val script = doc.>>(element("""meta[itemprop="embedURL"] + script""")).innerHtml
+        val item = doc.>?>(element("""meta[itemprop="embedURL"] + script"""))
+        if (item.isEmpty) {
+          throw new Exception(a)
+        }
+        val script = item.get.innerHtml
         val array = script.split(";")
 
         val sub = array(2).split("\\)").last.trim.stripPrefix("-").trim.toLong
