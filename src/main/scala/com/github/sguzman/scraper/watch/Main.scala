@@ -96,5 +96,26 @@ object Main {
     }
 
     Init.removeHttp(episodes.toList.flatMap(_.eps))
+
+    iframe.map{a =>
+      def proc(doc: Browser#DocumentType): String = {
+        val maybeJS = doc.>?>(element("""script[type="text/javascript"]"""))
+        if (maybeJS.isEmpty) {
+          throw new Exception(a)
+        }
+
+        val js = maybeJS.get
+
+        val files = js.innerHtml.split("file:").flatMap(_.split("\""))
+        val links = files
+          .map(a => StringUtils.substringBetween(a, "\"", "\""))
+          .filter(_.startsWith("http://"))
+
+        links.asJson.spaces4
+      }
+
+      def dec(s: String): List[String] = decode[List[String]](s).right.get
+      Init.cascade(s"https://www.watchcartoononline.io$a", proc, dec )
+    }
   }
 }
