@@ -33,7 +33,7 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-core" % "0.9.2",
   "io.circe" %% "circe-parser" % "0.9.2",
   "io.circe" %% "circe-generic" % "0.9.2",
-  "pl.newicom" %% "schale" % "1.0.2"
+  "org.apache.commons" % "commons-lang3" % "3.7"
 )
 
 /** Make sure to fork on run */
