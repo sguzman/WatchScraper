@@ -53,7 +53,14 @@ object Main {
     val ignore = Set(
       "https://www.watchcartoononline.io/charadys-daily-joke-episode-7-english-subbed",
       "https://www.watchcartoononline.io/asobi-ni-iku-yo-ova-english-subbed",
-      "https://www.watchcartoononline.io/black-jack-2004-episode-3-english-subbed"
+      "https://www.watchcartoononline.io/black-jack-2004-episode-3-english-subbed",
+      "https://www.watchcartoononline.io/evil-or-live-episode-10-english-subbed",
+      "https://www.watchcartoononline.io/igano-kabamaru-episode-10-english-subbed",
+      "https://www.watchcartoononline.io/kuromukuro-episode-15-english-subbed",
+      "https://www.watchcartoononline.io/mahoujin-guru-guru-2017-episode-24-english-subbed",
+      "https://www.watchcartoononline.io/kamisama-minarai-himitsu-no-cocotama-episode-72-english-subbed",
+      "https://www.watchcartoononline.io/kuromukuro-episode-15-english-subbed",
+      "https://www.watchcartoononline.io/mahoujin-guru-guru-2017-episode-24-english-subbed"
     )
 
     val iframe = episodes
