@@ -51,11 +51,11 @@ object Init {
     }
   })
 
-  def getItemCache[A](key: String, dec: String => A) = {
+  def getItemCache[A](key: String, dec: String => A): A = {
     dec(cache(key))
   }
 
-  def getHttpCache[A <: Any](key: String, proc: Browser#DocumentType => String, dec: String => A, newKey: String => Unit = println) = {
+  def getHttpCache[A](key: String, proc: Browser#DocumentType => String, dec: String => A, newKey: String => Unit = println): A = {
     val doc = JsoupBrowser().parseString(httpCache(key))
 
     if (!cache.contains(key)) {
@@ -67,7 +67,7 @@ object Init {
     getItemCache(key, dec)
   }
 
-  def get[A](url: String, proc: Browser#DocumentType => String, dec: String => A, newKey: String => Unit = println) = {
+  def get[A](url: String, proc: Browser#DocumentType => String, dec: String => A, newKey: String => Unit = println): A = {
     def retry: String = Try(Http(url).asString) match {
       case Success(v) => v.body
       case Failure(e) => e match {
@@ -79,9 +79,11 @@ object Init {
     getHttpCache(url, proc, dec)
   }
 
-  def cascade[A](url: String, proc: Browser#DocumentType => String, dec: String => A, newKey: String => Unit = println) = {
+  def cascade[A](url: String, proc: Browser#DocumentType => String, dec: String => A, newKey: String => Unit = println): A = {
     if (cache.contains(url)) getItemCache(url, dec)
     else if (httpCache.contains(url)) getHttpCache(url, proc, dec)
     else get(url, proc, dec)
   }
+
+  def removeHttp(s: List[String]): Unit = s.foreach(httpCache.remove)
 }
